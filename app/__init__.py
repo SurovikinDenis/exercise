@@ -14,9 +14,14 @@ def create_app(confing_class=Config):
     app = Flask(__name__)
     app.config.from_object(confing_class)
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '').replace(
+    database_url = os.getenv('DATABASE_URL')
+    if not database_url:
+        raise ValueError("DATABASE_URL не установлен")
+    
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url.replace(
         'postgres://', 'postgresql://', 1
     )
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
     migrate.init_app(app, db)
