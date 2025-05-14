@@ -1,4 +1,6 @@
 from flask import Flask
+import os
+from dotenv import load_dotenv
 
 from .routes.admin import admin_bp
 from .extensions import db, migrate, login_manager, assets
@@ -6,10 +8,15 @@ from .config import Config
 from .routes.user import user
 from .routes.zakaz import order
 
+load_dotenv()
 
 def create_app(confing_class=Config):
     app = Flask(__name__)
     app.config.from_object(confing_class)
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '').replace(
+        'postgres://', 'postgresql://', 1
+    )
 
     db.init_app(app)
     migrate.init_app(app, db)
