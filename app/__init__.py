@@ -34,5 +34,5 @@ def create_app(confing_class=Config):
 
     return app
 
-
+app = create_app()
 
