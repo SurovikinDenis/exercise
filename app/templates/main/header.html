@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
+        <a href="{{ url_for('user.home') }}"
+           class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+            <img src="{{ url_for('static', filename='image/logo.png') }}" alt="" class="w-50">
+        </a>
+
+        <div class="text-end">
+            {% if current_user.is_authenticated %}
+            <span class="me-3">Добро пожаловать, {{ current_user.username }}</span>
+            <a href="{{ url_for('user.logout') }}" class="btn btn-dark me-2">Выйти</a>
+            {% else %}
+            <a href="{{ url_for('user.login') }}" class="btn btn-dark me-2">Войти</a>
+            <a href="{{ url_for('user.register') }}" class="btn btn-warning">Зарегистрироваться</a>
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+{% extends 'user/dashboard.html' %}
+
+{% block dashboard_content %}
+<div class="card">
+    <div class="card-header">
+        <h4>Мой профиль</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3 text-center">
+                <img src="{{ current_user.avatar or url_for('static', filename='image/avatar.jpg') }}"
+                     class="img-thumbnail rounded-circle mb-3" width="150" alt="Аватар">
+                <a href="" class="btn btn-sm btn-outline-primary">Изменить фото</a>
+            </div>
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="30%">Имя пользователя</th>
+                        <td>{{ current_user.username }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ current_user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Телефон</th>
+                        <td>{{ current_user.telephone or 'Не указан' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Статус</th>
+                        <td>
+                            <span class="badge bg-{{ 'success' if current_user.status == 'company' else 'info' }}">
+                                {{ 'Компания' if current_user.status == 'company' else 'Пользователь' }}
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+                <a href="{{ url_for('user.settings') }}" class="btn btn-primary">
+                    Редактировать профиль
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

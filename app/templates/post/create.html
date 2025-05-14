@@ -1,0 +1,83 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <a href="{{ url_for('user.home') }}" class="btn btn-secondary">Назад</a>
+    <h2>Создание нового заказа</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="card mb-4">
+            <div class="card-header">Отправитель</div>
+            <div class="card-body">
+                <div class="form-group">
+                    {{ form.sender_name.label }}
+                    {{ form.sender_name(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.sender_phone.label }}
+                    {{ form.sender_phone(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.sender_address.label }}
+                    {{ form.sender_address(class="form-control") }}
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">Получатель</div>
+            <div class="card-body">
+                <div class="form-group">
+                    {{ form.recipient_name.label }}
+                    {{ form.recipient_name(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.recipient_phone.label }}
+                    {{ form.recipient_phone(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.recipient_address.label }}
+                    {{ form.recipient_address(class="form-control") }}
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">Информация о грузе</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form.length.label }}
+                            {{ form.length(class="form-control") }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form.width.label }}
+                            {{ form.width(class="form-control") }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form.height.label }}
+                            {{ form.height(class="form-control") }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form.actual_weight.label }}
+                    {{ form.actual_weight(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.description.label }}
+                    {{ form.description(class="form-control", rows=3) }}
+                </div>
+            </div>
+        </div>
+
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+</div>
+{% endblock %}

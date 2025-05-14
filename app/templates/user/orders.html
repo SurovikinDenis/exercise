@@ -1,0 +1,55 @@
+{% extends 'user/dashboard.html' %}
+
+{% block dashboard_content %}
+
+
+<div class="container mt-4">
+
+    {% if orders %}
+    <div class="list-group mt-3">
+        {% for order in orders %}
+        <div class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Заказ #{{ order.id }}</h5>
+                <small class="text-{{ 'success' if order.status == 'completed' else 'warning' }}">
+                    {{ order.status }}
+                </small>
+            </div>
+            <p class="mb-1">
+                <strong>От:</strong> {{ order.sender_name }} (<b>Тел:</b> {{ order.sender_phone }})<br>
+                <strong>Кому:</strong> {{ order.recipient_name }} (<b>Тел:</b> {{ order.recipient_phone }})
+            </p>
+            <div class="mb-2">
+                <small>
+                    <strong>Адрес доставки:</strong> {{ order.recipient_address }}<br>
+                    <strong>Габариты:</strong> {{ order.length }}×{{ order.width }}×{{ order.height }} см<br>
+                    <strong>Фактический вес:</strong> {{ order.actual_weight }} кг<br>
+                    <strong>Объемный вес:</strong> {{ order.volumetric_weight }} кг<br>
+                    <strong>Описание груза:</strong> {{ order.description or 'Нет комментария'}} <br>
+                    <strong class="text-primary">Вес для оплаты:</strong> {{ order.chargeable_weight }} кг
+                </small>
+            </div>
+            <div class="mb-2 d-flex justify-content-end gap-2">
+                {% if order.can_delete(current_user) %}
+                <a href="{{ url_for('order.detail', order_id=order.id) }}" class="btn btn-sm btn-warning">
+                    Редактировать
+                </a>
+                <form action="{{ url_for('order.delete', order_id=order.id) }}" method="POST" class="d-inline">
+                    <input type="hidden" name="csrf_token">
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Удалить этот заказ?')">Удалить</button>
+                </form>
+                {% endif %}
+            </div>
+
+
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info mt-3">
+        У вас пока нет созданных заказов
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

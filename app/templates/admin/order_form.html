@@ -1,0 +1,25 @@
+{% extends 'admin/dashboard.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Редактирование заказа #{{ order.id }}</h2>
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ form.status.label }}
+            {{ form.status(class="form-control") }}
+        </div>
+
+        <!-- Добавьте другие поля заказа по необходимости -->
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            <a href="{{ url_for('admin.view_order', order_id=order.id) }}" class="btn btn-secondary">
+                Отмена
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}
